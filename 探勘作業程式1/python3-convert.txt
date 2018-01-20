@@ -1,0 +1,42 @@
+import csv
+import os
+import sys
+itemNum =                       !!!!!!!!這行要改，item種類數
+tranNum =                       !!!!!!!!這行要改，交易筆數
+transactionList=[]
+csvHeader = []
+
+for i in range(itemNum): #construct csvHeader 
+    csvHeader.append("item" + str(i+1))
+print(csvHeader)
+
+for j in range(tranNum):  # construct the transaction list
+    tranContent= []
+    for i in range(itemNum):
+        tranContent.append(0)
+    transactionList.append(tranContent)
+#print(transactionList)
+
+name = '.txt'  # read the original file                         !!!!!!!!這行要改，讀檔
+datafile = open(name, encoding='UTF-8')
+data = datafile.readlines()
+for line in data: # construct each transaction vector
+    #print(line)
+    contents = line.split(" ")
+    #print(contents)
+    tran = int(contents[0])-1
+    item = int(contents[1])
+    #print("tran: "+str(tran)+ " item: "+str(item))
+    transactionList[tran][item-1] = 1    
+    
+datafile.close()
+print(transactionList)
+
+
+f = open('.csv', 'w',newline='')# write header to csv file      !!!!!!!!這行要改，產生檔
+outputfile= csv.writer(f)
+outputfile.writerow(csvHeader)
+for k in range(len(transactionList)):
+    print(transactionList[k])
+    outputfile.writerow(transactionList[k])
+f.close()

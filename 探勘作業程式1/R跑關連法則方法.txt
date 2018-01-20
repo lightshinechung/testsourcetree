@@ -1,0 +1,33 @@
+install.packages("Matrix")
+
+library(Matrix)
+
+install.packages("arules")
+
+library(arules)
+
+beer=as.matrix(read.csv(file="C:\\Users\\Damon\\Desktop\\TDMsample.csv",header=FALSE))
+
+rule=apriori(beer,parameter=list(supp=0.1,conf=0.5))
+
+inspect(rule)
+
+summary(rule)
+
+out1 <- as(rule,"data.frame")
+View(out1)
+
+#Visualization
+
+install.packages("arulesViz")
+
+library(arulesViz)
+plot(basket_rules)
+plot(basket_rules, method = "grouped", control = list(k = 10))
+plot(basket_rules, method="graph", control=list(type="items"))
+plot(basket_rules, method="paracoord",  control=list(alpha=1,reorder=TRUE))
+plot(basket_rules,measure=c("support","lift"),shading="confidence",interactive=T)
+
+#Graph to display top 5 items
+
+itemFrequencyPlot(txn, topN = 5)
